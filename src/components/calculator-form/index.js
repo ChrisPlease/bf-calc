@@ -13,17 +13,24 @@ class CalculatorForm extends Component {
       weight: '',
       age: '',
       measurements: {
-        first: {},
-        second: {},
-        third: {}
+        first: 0
       },
       bodyFat: 0
     };
+
+    this.calculateSum = this.calculateSum.bind(this);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.renderMeasurementFields = this.renderMeasurementFields.bind(this);
+  }
+
+  calculateSum(a, b, c) {
+    const { measurements } = this.state;
+    const sum = a + b + c;
+    console.log(sum);
+    // this.setState({...this.state, measurements: {first: sum}});
   }
 
   handleChange(e) {
@@ -49,7 +56,7 @@ class CalculatorForm extends Component {
   }
 
   renderMeasurementFields() {
-    const { state } = this;
+    const { state, calculateSum } = this;
     const { measurements } = state;
 
     return Object.keys(measurements).map((measure, i) => {
@@ -57,10 +64,12 @@ class CalculatorForm extends Component {
       const labelClass = classNames({
         'visuallyHidden': i > 0
       });
+
       return (
         <FormField
-            labelClass={labelClass}
+            calculateSum={calculateSum}
             key={i}
+            labelClass={labelClass}
             fieldName={displayName}
             step="1"
             measurement />
