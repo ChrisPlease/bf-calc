@@ -8,9 +8,9 @@ class MeasurementInput extends Component {
     super(props);
 
     this.state = {
-      chest: 0,
-      abdomen: 0,
-      thigh: 0
+      chest: '',
+      abdomen: '',
+      thigh: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -35,19 +35,17 @@ class MeasurementInput extends Component {
 
   renderInputs () {
     const { state, props, handleChange } = this;
+    const { step, type, labelClass, totalMeasurements } = props;
     const { chest, abdomen, thigh } = state;
-    const { step, type, name, labelClass, calculateSum } = props;
 
     return Object.keys(state).map((val, i) => {
       const displayName = (val.length > 0) ? val.charAt(0).toUpperCase() + val.slice(1) : '';
-
-      console.log(calculateSum);
       return (
         <div key={i}>
           <label className={labelClass} htmlFor={val}>{displayName}</label>
           <Input
               onBlur={() => {
-                return (Object.keys(state).length - 1 === i) ? 5 : null;
+                return (Object.keys(state).length - 1 === i) ? totalMeasurements(chest, abdomen, thigh) : null;
               }}
               handleChange={handleChange}
               value={state[val]}
@@ -60,13 +58,14 @@ class MeasurementInput extends Component {
   }
 
   render() {
-    const { renderInputs } = this;
+    const { renderInputs, props } = this;
+    const { total } = props;
 
     return (
       <div className="measure-input">
         {renderInputs()}
         <div className="total">
-
+          {total > 0 && total}
         </div>
       </div>
     );

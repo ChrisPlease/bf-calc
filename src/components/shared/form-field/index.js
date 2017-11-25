@@ -5,7 +5,7 @@ import MeasurementInput from '../measurement-input';
 
 import './index.css';
 
-const FormField = ({fieldName, step, value, measurement, handleChange, labelClass, calculateSum}) => {
+const FormField = ({fieldName, step, value, measurement, handleChange, labelClass, totalMeasurements, total}) => {
   const fieldLabel = fieldName.toLowerCase();
 
   const renderInputs = () => {
@@ -13,7 +13,8 @@ const FormField = ({fieldName, step, value, measurement, handleChange, labelClas
       <div className="form-field measurement-field">
         <label className="visuallyHidden" htmlFor={fieldLabel}>{fieldName} Measurement</label>
         <MeasurementInput
-            calculateSum={calculateSum}
+            total={total}
+            totalMeasurements={totalMeasurements}
             labelClass={labelClass}
             name={fieldName}
             type="number"

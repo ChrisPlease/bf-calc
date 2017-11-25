@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
+import {
+  calculateSum,
+  calculateMaleBodyDensity,
+  siriEquation,
+  calculateLeanBodyMass,
+  calculateWeightInFat
+} from '../../utils/math-helpers';
+
 import FormField from '../shared/form-field';
-import Input from '../shared/input';
 import Button from '../shared/button';
 
 class CalculatorForm extends Component {
@@ -15,10 +22,13 @@ class CalculatorForm extends Component {
       measurements: {
         first: 0
       },
-      bodyFat: 0
+      bodyDensity: 0,
+      bodyFat: 0,
+      leanBodyMass: 0,
+      weightInFat: 0
     };
 
-    this.calculateSum = this.calculateSum.bind(this);
+    this.totalMeasurements = this.totalMeasurements.bind(this);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,11 +36,8 @@ class CalculatorForm extends Component {
     this.renderMeasurementFields = this.renderMeasurementFields.bind(this);
   }
 
-  calculateSum(a, b, c) {
-    const { measurements } = this.state;
-    const sum = a + b + c;
-    console.log(sum);
-    // this.setState({...this.state, measurements: {first: sum}});
+  totalMeasurements(chest, abdomen, thigh) {
+    this.setState({...this.state, measurements: {first: calculateSum(chest, abdomen, thigh)}});
   }
 
   handleChange(e) {
@@ -49,15 +56,21 @@ class CalculatorForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { age, weight } = this.state;
-    const bodyFat = weight * age;
+    const { weight, age, measurements } = this.state;
+    const { first } = measurements;
+    const bodyDensity = calculateMaleBodyDensity(first, age);
+    const bodyFat = siriEquation(bodyDensity);
+    const bfPercent = bodyFat / 100;
+    const lbm = calculateLeanBodyMass(weight, bfPercent);
+    const weightInFat = calculateWeightInFat(weight, lbm);
 
-    this.setState({bodyFat});
+    this.setState({bodyDensity, bodyFat, leanBodyMass: lbm, weightInFat});
   }
 
   renderMeasurementFields() {
-    const { state, calculateSum } = this;
+    const { state, totalMeasurements } = this;
     const { measurements } = state;
+    // const { first, second } = measurements;
 
     return Object.keys(measurements).map((measure, i) => {
       const displayName = measure.charAt(0).toUpperCase() + measure.slice(1);
@@ -67,7 +80,8 @@ class CalculatorForm extends Component {
 
       return (
         <FormField
-            calculateSum={calculateSum}
+            total={measurements[measure]}
+            totalMeasurements={totalMeasurements}
             key={i}
             labelClass={labelClass}
             fieldName={displayName}
@@ -79,8 +93,7 @@ class CalculatorForm extends Component {
 
   render() {
     const { state, handleChange, handleSubmit, renderMeasurementFields } = this;
-    const { weight, age, measurements } = state;
-    const { chest, abdomin, thigh } = measurements;
+    const { weight, age } = state;
 
     return (
       <form>
@@ -102,7 +115,14 @@ class CalculatorForm extends Component {
           </Button>
         </div>
         <div>
-          {this.state.bodyFat > 0 && this.state.bodyFat}
+          {this.state.bodyDensity > 0 &&
+            <div>
+              Body Density: {this.state.bodyDensity} <br />
+              Body Fat: {this.state.bodyFat} <br />
+              Lean Body Mass: {this.state.leanBodyMass} <br />
+              Weight in Fat: {this.state.weightInFat}
+            </div>
+          }
         </div>
       </form>
     );

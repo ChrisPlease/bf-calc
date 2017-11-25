@@ -3,8 +3,6 @@ import logo from './logo.svg';
 import './App.css';
 
 import CalculatorForm from './components/calculator-form';
-import Input from './components/shared/input';
-import Button from './components/shared/button';
 
 class App extends Component {
   render() {
