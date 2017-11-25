@@ -1,16 +1,10 @@
 .form-field {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-flow: column;
   padding: 0.5rem 0;
 }
 
 .form-field label {
-  flex: 0 1 20%;
-  text-align: right;
-  padding-right: 1rem;
-}
-
-.form-field > *:not(label) {
-  flex: 0 1 80%;
+  align-self: flex-start;
+  padding-bottom: 0.25rem;
 }

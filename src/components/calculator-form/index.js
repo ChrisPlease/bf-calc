@@ -10,7 +10,10 @@ import {
 } from '../../utils/math-helpers';
 
 import FormField from '../shared/form-field';
+import MeasurementsFieldGroup from '../shared/measurements-field-group';
 import Button from '../shared/button';
+
+import './index.css';
 
 class CalculatorForm extends Component {
   constructor(props) {
@@ -20,7 +23,9 @@ class CalculatorForm extends Component {
       weight: '',
       age: '',
       measurements: {
-        first: 0
+        first: 0,
+        second: 0,
+        third: 0
       },
       bodyDensity: 0,
       bodyFat: 0,
@@ -28,16 +33,8 @@ class CalculatorForm extends Component {
       weightInFat: 0
     };
 
-    this.totalMeasurements = this.totalMeasurements.bind(this);
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
-    this.renderMeasurementFields = this.renderMeasurementFields.bind(this);
-  }
-
-  totalMeasurements(chest, abdomen, thigh) {
-    this.setState({...this.state, measurements: {first: calculateSum(chest, abdomen, thigh)}});
   }
 
   handleChange(e) {
@@ -67,36 +64,12 @@ class CalculatorForm extends Component {
     this.setState({bodyDensity, bodyFat, leanBodyMass: lbm, weightInFat});
   }
 
-  renderMeasurementFields() {
-    const { state, totalMeasurements } = this;
-    const { measurements } = state;
-    // const { first, second } = measurements;
-
-    return Object.keys(measurements).map((measure, i) => {
-      const displayName = measure.charAt(0).toUpperCase() + measure.slice(1);
-      const labelClass = classNames({
-        'visuallyHidden': i > 0
-      });
-
-      return (
-        <FormField
-            total={measurements[measure]}
-            totalMeasurements={totalMeasurements}
-            key={i}
-            labelClass={labelClass}
-            fieldName={displayName}
-            step="1"
-            measurement />
-      );
-    });
-  }
-
   render() {
-    const { state, handleChange, handleSubmit, renderMeasurementFields } = this;
+    const { state, handleChange, handleSubmit } = this;
     const { weight, age } = state;
 
     return (
-      <form>
+      <form className="calculator-panel">
         <FormField
             handleChange={handleChange}
             value={weight}
@@ -107,7 +80,9 @@ class CalculatorForm extends Component {
             value={age}
             fieldName="Age"
             step="1" />
-        {renderMeasurementFields()}
+        <div className="measurement-fields">
+          <MeasurementsFieldGroup measurements={this.state.measurements} />
+        </div>
         <div>
           <Button
               clickHandler={handleSubmit}>

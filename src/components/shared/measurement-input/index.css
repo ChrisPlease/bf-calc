@@ -1,9 +1,14 @@
 .measure-input {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .measure-input > * {
   display: flex;
   flex-flow: column;
+}
+
+.form-field .measure-input label {
+  align-self: center;
+  font-size: .75rem;
 }

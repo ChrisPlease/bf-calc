@@ -12,44 +12,26 @@ class MeasurementInput extends Component {
       abdomen: '',
       thigh: ''
     };
-
-    this.handleChange = this.handleChange.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
   }
 
-  handleChange(e) {
-    const name = e.target.name;
-    const value = e.target.value;
-
-    switch (name) {
-      case 'chest':
-        return this.setState({chest: value});
-      case 'abdomen':
-        return this.setState({abdomen: value});
-      case 'thigh':
-        return this.setState({thigh: value});
-      default:
-        return;
-    }
-  }
-
   renderInputs () {
-    const { state, props, handleChange } = this;
-    const { step, type, labelClass, totalMeasurements } = props;
-    const { chest, abdomen, thigh } = state;
+    const { state, props } = this;
+    const { step, type, labelClass, totalMeasurements, handleChange, measureOrder, locations, values } = props;
 
-    return Object.keys(state).map((val, i) => {
+    return locations.map((val, i) => {
       const displayName = (val.length > 0) ? val.charAt(0).toUpperCase() + val.slice(1) : '';
+      const fieldValue = `${measureOrder}-${val}`;
       return (
         <div key={i}>
-          <label className={labelClass} htmlFor={val}>{displayName}</label>
+          <label className={labelClass} htmlFor={fieldValue}>{displayName} (in mm)</label>
           <Input
               onBlur={() => {
-                return (Object.keys(state).length - 1 === i) ? totalMeasurements(chest, abdomen, thigh) : null;
+                return (Object.keys(state).length - 1 === i) ? 5 : null;
               }}
               handleChange={handleChange}
-              value={state[val]}
-              fieldName={val}
+              value={values[val]}
+              fieldName={fieldValue}
               type={type}
               step={step} />
         </div>
@@ -64,9 +46,6 @@ class MeasurementInput extends Component {
     return (
       <div className="measure-input">
         {renderInputs()}
-        <div className="total">
-          {total > 0 && total}
-        </div>
       </div>
     );
   }
