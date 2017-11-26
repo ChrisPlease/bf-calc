@@ -12,11 +12,10 @@ const FormField = ({
   measurement,
   handleChange,
   labelClass,
-  totalMeasurements,
-  total,
   measureOrder,
   locations,
-  values
+  values,
+  calculateTotal
 }) => {
   const fieldLabel = fieldName.toLowerCase();
 
@@ -28,10 +27,9 @@ const FormField = ({
         <MeasurementInput
             measureOrder={measureOrder}
             locations={locations}
-            total={total}
+            calculateTotal={calculateTotal}
             values={values}
             handleChange={handleChange}
-            totalMeasurements={totalMeasurements}
             labelClass={labelClass}
             name={fieldName}
             type="number"

@@ -12,46 +12,56 @@ class MeasurementsFieldGroup extends Component {
 
     this.state = {
       first: {
-        chest: 0,
-        abdomen: 0,
-        thigh: 0
+        chest: '',
+        abdomen: '',
+        thigh: ''
       },
       second: {
-        chest: 0,
-        abdomen: 0,
-        thigh: 0
+        chest: '',
+        abdomen: '',
+        thigh: ''
       },
       third: {
-        chest: 0,
-        abdomen: 0,
-        thigh: 0
+        chest: '',
+        abdomen: '',
+        thigh: ''
       }
     }
 
-    this.totalMeasurements = this.totalMeasurements.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.renderMeasurementFields = this.renderMeasurementFields.bind(this);
-  }
-
-  totalMeasurements(chest, abdomen, thigh) {
-    console.log(this.state);
-    // this.setState({...this.state, measurements: {first: calculateSum(chest, abdomen, thigh)}});
   }
 
   handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
     const slicedName = name.split('-');
-    const field = this.state[slicedName[0]];
+    const order = slicedName[0];
+    const location = slicedName[1];
 
-    field[slicedName[1]] = value;
+    const stateObject = {
+      ...this.state,
+        [order]: {
+          ...this.state[order],
+          [location]: value
+        }
+    };
 
-    this.forceUpdate();
+    this.setState(stateObject);
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log(this.props);
+
+  //   return true;
+  // }
+
+  componentDidUpdate(prevProps, prevState) {
   }
 
   renderMeasurementFields() {
-    const { props, state, totalMeasurements, handleChange } = this;
-    const { measurements } = props;
+    const { props, state, handleChange } = this;
+    const { measurements, calculateTotal } = props;
     const locations = Object.keys(state.first);
 
     return Object.keys(measurements).map((measure, i) => {
@@ -66,8 +76,7 @@ class MeasurementsFieldGroup extends Component {
             locations={locations}
             values={state[measure]}
             handleChange={handleChange}
-            total={measurements[measure]['total']}
-            totalMeasurements={totalMeasurements}
+            calculateTotal={calculateTotal}
             key={i}
             labelClass={labelClass}
             fieldName={displayName}
