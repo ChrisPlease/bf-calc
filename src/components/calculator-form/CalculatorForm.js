@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import {
-  calculateSum,
   calculateMaleBodyDensity,
   siriEquation,
   calculateLeanBodyMass,
@@ -9,9 +8,9 @@ import {
   calculateAverage
 } from '../../utils/math-helpers';
 
-import FormField from '../shared/form-field';
-import MeasurementsFieldGroup from '../shared/measurements-field-group';
-import Button from '../shared/button';
+import FormField from '../shared/form-field/FormField';
+import MeasurementsFieldGroup from '../shared/measurements-field-group/MeasurementsFieldGroup';
+import Button from '../shared/button/Button';
 
 import './index.css';
 
@@ -27,7 +26,6 @@ class CalculatorForm extends Component {
         second: 0,
         third: 0
       },
-      measurementAverage: 0,
       bodyDensity: 0,
       bodyFat: 0,
       leanBodyMass: 0,
@@ -35,9 +33,8 @@ class CalculatorForm extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.calculateTotal = this.calculateTotal.bind(this);
+    this.handleTotal = this.handleTotal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.averageMeasurements = this.averageMeasurements.bind(this);
   }
 
   handleChange(e) {
@@ -54,23 +51,30 @@ class CalculatorForm extends Component {
     }
   }
 
-  calculateTotal(measureOrder, a, b, c) {
-    const { measurements } = this.state;
-    const sum = calculateSum(a, b, c);
-    measurements[measureOrder] = sum;
+  handleTotal(order, total) {
+    const { state } = this;
+    const { measurements } = state;
+    measurements[order] = total;
 
-    this.setState({ measurements });
-  }
+    // console.log(order);
+    const stateObject = {
+      ...state,
+      measurements: {
+        ...measurements,
+        [order]: total
+      }
+    };
 
-  averageMeasurements() {
-    const av = calculateAverage(...Object.values(this.state.measurements));
-    return this.setState({measurementAverage: av});
+    // console.log(stateObject);
+
+    this.setState(stateObject);
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    const { weight, age, averageMeasurements } = this.state;
-    const bodyDensity = calculateMaleBodyDensity(averageMeasurements, age);
+    const { weight, age, measurements } = this.state;
+    const average = calculateAverage(...Object.values(measurements));
+    const bodyDensity = calculateMaleBodyDensity(average, age);
     const bodyFat = siriEquation(bodyDensity);
     const bfPercent = bodyFat / 100;
     const lbm = calculateLeanBodyMass(weight, bfPercent);
@@ -80,7 +84,7 @@ class CalculatorForm extends Component {
   }
 
   render() {
-    const { state, handleChange, handleSubmit, calculateTotal } = this;
+    const { state, handleChange, handleSubmit, handleTotal } = this;
     const { weight, age, measurements } = state;
 
     return (
@@ -96,7 +100,7 @@ class CalculatorForm extends Component {
             fieldName="Age"
             step="1" />
         <div className="measurement-fields">
-          <MeasurementsFieldGroup calculateTotal={calculateTotal} measurements={measurements} />
+          <MeasurementsFieldGroup handleTotal={handleTotal} measurements={measurements} />
         </div>
         <div>
           <Button

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-import FormField from '../form-field';
+import FormField from '../form-field/FormField';
 
-import { calculateSum } from '../../../utils/math-helpers';
+import { calculateSum, findNonZeros } from '../../../utils/math-helpers';
+
+
 
 class MeasurementsFieldGroup extends Component {
 
@@ -29,7 +31,26 @@ class MeasurementsFieldGroup extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.calculateTotal = this.calculateTotal.bind(this);
     this.renderMeasurementFields = this.renderMeasurementFields.bind(this);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { state, props } = this;
+    const { measurements, handleTotal } = props;
+    const ordersWithValue = Object.keys(state).filter(val => {
+      return findNonZeros(Object.values(state[val]));
+    });
+
+    if (ordersWithValue.length) {
+      ordersWithValue.map(order => {
+        const stateSum = calculateSum(...Object.values(state[order]));
+
+        if (stateSum !== measurements[order]) {
+          return handleTotal(order, stateSum)
+        }
+      });
+    }
   }
 
   handleChange(e) {
@@ -50,18 +71,14 @@ class MeasurementsFieldGroup extends Component {
     this.setState(stateObject);
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log(this.props);
-
-  //   return true;
-  // }
-
-  componentDidUpdate(prevProps, prevState) {
+  calculateTotal(order, a,b,c) {
+    const { handleTotal } = this.props;
+    handleTotal(order, calculateSum(a,b,c));
   }
 
   renderMeasurementFields() {
-    const { props, state, handleChange } = this;
-    const { measurements, calculateTotal } = props;
+    const { props, state, calculateTotal, handleChange } = this;
+    const { measurements } = props;
     const locations = Object.keys(state.first);
 
     return Object.keys(measurements).map((measure, i) => {
@@ -72,6 +89,7 @@ class MeasurementsFieldGroup extends Component {
 
       return (
         <FormField
+            total={measurements[measure]}
             measureOrder={measure}
             locations={locations}
             values={state[measure]}
@@ -88,7 +106,12 @@ class MeasurementsFieldGroup extends Component {
 
   render() {
     const { renderMeasurementFields } = this;
-    return <div>{renderMeasurementFields()}</div>;
+
+    return (
+      <div>
+        {renderMeasurementFields()}
+      </div>
+    );
   }
 }
 

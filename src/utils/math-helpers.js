@@ -23,6 +23,8 @@ const calculateMaleBodyDensity = (measurementSum, age) => {
   return eq;
 };
 
+const findNonZeros = (obj) => Object.values(obj).reduce((acc, val) => (val > 0), false);
+
 const siriEquation = (p) => (4.95 / p - 4.5) * 100;
 
 const calculateLeanBodyMass = (w, f) => w - (w * f);
@@ -33,6 +35,7 @@ export {
   calculateSum,
   calculateAverage,
   calculateMaleBodyDensity,
+  findNonZeros,
   siriEquation,
   calculateLeanBodyMass,
   calculateWeightInFat

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Input from '../input';
-import MeasurementInput from '../measurement-input';
+import Input from '../input/Input';
+import MeasurementInput from '../measurement-input/MeasurementInput';
 
 import './index.css';
 
@@ -15,6 +15,7 @@ const FormField = ({
   measureOrder,
   locations,
   values,
+  total,
   calculateTotal
 }) => {
   const fieldLabel = fieldName.toLowerCase();
@@ -25,13 +26,13 @@ const FormField = ({
       <div className="form-field measurement-field">
         <label className="visuallyHidden" htmlFor={fieldLabel}>{fieldName} Measurement</label>
         <MeasurementInput
+            total={total}
             measureOrder={measureOrder}
             locations={locations}
             calculateTotal={calculateTotal}
             values={values}
             handleChange={handleChange}
             labelClass={labelClass}
-            name={fieldName}
             type="number"
             step={step} />
       </div> :
