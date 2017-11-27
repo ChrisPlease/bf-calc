@@ -16,16 +16,6 @@ const MeasurementInput = ({
   calculateTotal
 }) => {
 
-
-
-  // if (findNonZeros) {
-  //   console.log()
-  //   console.log('calculate now!');
-  // }
-  // if (findNonZeros) calculateTotal(measureOrder, ...Object.values(values));
-  // console.log(...Object.values(values));
-  // console.log(calculateTotal(...Object.values(values)));
-
   return (
     <div className="measure-input">
       {locations.map((val, i) => {
