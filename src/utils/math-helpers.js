@@ -32,6 +32,8 @@ const calculateLeanBodyMass = (w, f) => w - (w * f);
 
 const calculateWeightInFat = (w, lbm) => w - lbm;
 
+const roundTwoDecimals = (num) => Math.ceil(num * 100) / 100;
+
 export {
   calculateSum,
   calculateAverage,
@@ -39,5 +41,6 @@ export {
   findNonZeros,
   siriEquation,
   calculateLeanBodyMass,
-  calculateWeightInFat
+  calculateWeightInFat,
+  roundTwoDecimals
 }

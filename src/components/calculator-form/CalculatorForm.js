@@ -5,7 +5,8 @@ import {
   siriEquation,
   calculateLeanBodyMass,
   calculateWeightInFat,
-  calculateAverage
+  calculateAverage,
+  roundTwoDecimals
 } from '../../utils/math-helpers';
 
 import FormField from '../shared/form-field/FormField';
@@ -85,7 +86,15 @@ class CalculatorForm extends Component {
 
   render() {
     const { state, handleChange, handleSubmit, handleTotal } = this;
-    const { weight, age, measurements } = state;
+    const {
+      age,
+      weight,
+      measurements,
+      bodyDensity,
+      bodyFat,
+      leanBodyMass,
+      weightInFat
+    } = state;
 
     return (
       <form className="calculator-panel">
@@ -109,12 +118,12 @@ class CalculatorForm extends Component {
           </Button>
         </div>
         <div>
-          {this.state.bodyDensity > 0 &&
+          {bodyDensity > 0 &&
             <div>
-              Body Density: {this.state.bodyDensity} <br />
-              Body Fat: {this.state.bodyFat} <br />
-              Lean Body Mass: {this.state.leanBodyMass} <br />
-              Weight in Fat: {this.state.weightInFat}
+              Body Density: {roundTwoDecimals(bodyDensity)} <br />
+              Body Fat: {roundTwoDecimals(bodyFat)} <br />
+              Lean Body Mass: {roundTwoDecimals(leanBodyMass)} <br />
+              Weight in Fat: {roundTwoDecimals(weightInFat)}
             </div>
           }
         </div>
