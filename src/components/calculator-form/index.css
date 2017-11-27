@@ -3,7 +3,7 @@
   margin: 2rem auto;
   max-width: 600px;
   box-shadow: 0 2px 4px rgba(200, 200, 200, .5);
-  padding: 1rem 2rem;
+  padding: 1rem 0.5rem;
 }
 
 .measurement-fields {

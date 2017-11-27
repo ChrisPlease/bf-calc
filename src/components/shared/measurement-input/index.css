@@ -6,6 +6,7 @@
 .measure-input > * {
   display: flex;
   flex-flow: column;
+  flex: 0 1 30%;
 }
 
 .form-field .measure-input label {
