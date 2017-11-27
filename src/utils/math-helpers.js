@@ -8,12 +8,13 @@ const calculateSum = (...args) => {
 };
 
 const calculateAverage = (...args) => {
-  const len = args.length;
-  console.log(len);
-  return args
+  const filteredArgs = args
     .map(arg => parsedArg(arg))
     .filter(arg => !isNaN(arg))
-    .reduce((acc, curr) => parsedArg(acc) + parsedArg(curr)) / len;
+    .filter(arg => arg > 0);
+
+  return filteredArgs
+    .reduce((acc, curr, i, arr) => parsedArg(acc) + parsedArg(curr)) / filteredArgs.length;
 };
 
 const calculateMaleBodyDensity = (measurementSum, age) => {

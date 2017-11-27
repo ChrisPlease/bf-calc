@@ -91,14 +91,14 @@ class CalculatorForm extends Component {
       <form className="calculator-panel">
         <FormField
             handleChange={handleChange}
-            value={weight}
-            fieldName="Weight"
-            step="0.1" />
-        <FormField
-            handleChange={handleChange}
             value={age}
             fieldName="Age"
             step="1" />
+        <FormField
+            handleChange={handleChange}
+            value={weight}
+            fieldName="Weight"
+            step="0.1" />
         <div className="measurement-fields">
           <MeasurementsFieldGroup handleTotal={handleTotal} measurements={measurements} />
         </div>
