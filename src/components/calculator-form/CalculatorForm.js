@@ -47,7 +47,6 @@ class CalculatorForm extends Component {
     const { measurements } = state;
     measurements[order] = total;
 
-    // console.log(order);
     const stateObject = {
       ...state,
       measurements: {
@@ -55,8 +54,6 @@ class CalculatorForm extends Component {
         [order]: total
       }
     };
-
-    // console.log(stateObject);
 
     this.setState(stateObject);
   }
@@ -98,6 +95,7 @@ class CalculatorForm extends Component {
             value={weight}
             fieldName="Weight"
             step="0.1" />
+        <span>Measurements</span>
         <div className="measurement-fields">
           <MeasurementsFieldGroup handleTotal={handleTotal} measurements={measurements} />
         </div>

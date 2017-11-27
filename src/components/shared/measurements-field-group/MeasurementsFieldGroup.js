@@ -5,34 +5,39 @@ import FormField from '../form-field/FormField';
 
 import { calculateSum, findNonZeros } from '../../../utils/math-helpers';
 
-
+const sites = {
+  chest: '',
+  abdomen: '',
+  thigh: ''
+};
 
 class MeasurementsFieldGroup extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      first: {
-        chest: '',
-        abdomen: '',
-        thigh: ''
-      },
-      second: {
-        chest: '',
-        abdomen: '',
-        thigh: ''
-      },
-      third: {
-        chest: '',
-        abdomen: '',
-        thigh: ''
-      }
-    }
+    this.state = {};
 
     this.handleChange = this.handleChange.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
     this.renderMeasurementFields = this.renderMeasurementFields.bind(this);
+  }
+
+  componentWillMount() {
+    const { state, props } = this;
+    const { measurements } = props;
+
+    const measureState = Object.keys(measurements).reduce((acc, measure) => {
+      acc[measure] = sites;
+      return acc;
+    }, {});
+
+    const newState = {
+      ...state,
+      ...measureState
+    };
+
+    this.setState(newState);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -109,7 +114,7 @@ class MeasurementsFieldGroup extends Component {
 
     return (
       <div>
-        {renderMeasurementFields()}
+        {this.state.first && renderMeasurementFields()}
       </div>
     );
   }
