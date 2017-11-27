@@ -13,25 +13,15 @@ import FormField from '../shared/form-field/FormField';
 import MeasurementsFieldGroup from '../shared/measurements-field-group/MeasurementsFieldGroup';
 import Button from '../shared/button/Button';
 
+import { initialState } from '../../constants/states';
+
 import './index.css';
 
 class CalculatorForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      weight: '',
-      age: '',
-      measurements: {
-        first: 0,
-        second: 0,
-        third: 0
-      },
-      bodyDensity: 0,
-      bodyFat: 0,
-      leanBodyMass: 0,
-      weightInFat: 0
-    };
+    this.state = { ...initialState };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleTotal = this.handleTotal.bind(this);

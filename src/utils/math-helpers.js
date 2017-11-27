@@ -32,7 +32,7 @@ const calculateLeanBodyMass = (w, f) => w - (w * f);
 
 const calculateWeightInFat = (w, lbm) => w - lbm;
 
-const roundTwoDecimals = (num) => Math.ceil(num * 100) / 100;
+const roundTwoDecimals = (num) => Math.ceil(num * 1000) / 1000;
 
 export {
   calculateSum,
