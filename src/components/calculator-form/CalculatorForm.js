@@ -32,14 +32,7 @@ class CalculatorForm extends Component {
     const field = e.target.name;
     const value = e.target.value;
 
-    switch(field) {
-      case 'age':
-        return this.setState({age: value});
-      case 'weight':
-        return this.setState({weight: value});
-      default:
-        return;
-    }
+    this.setState({[field]: value});
   }
 
   handleTotal(order, total) {
@@ -76,6 +69,7 @@ class CalculatorForm extends Component {
     const {
       age,
       weight,
+      gender,
       measurements,
       bodyDensity,
       bodyFat,
@@ -95,9 +89,31 @@ class CalculatorForm extends Component {
             value={weight}
             fieldName="Weight"
             step="0.1" />
+        <div>
+          <ul>
+            <li>
+              <label htmlFor="gender">Male</label>
+              <input
+                name="gender"
+                value="male"
+                type="radio"
+                onChange={handleChange}
+                checked={gender === 'male'} />
+            </li>
+            <li>
+              <label htmlFor="gender">Female</label>
+              <input
+                name="gender"
+                value="female"
+                type="radio"
+                onChange={handleChange}
+                checked={gender === 'female'} />
+            </li>
+          </ul>
+        </div>
         <span>Measurements</span>
         <div className="measurement-fields">
-          <MeasurementsFieldGroup handleTotal={handleTotal} measurements={measurements} />
+          <MeasurementsFieldGroup gender={gender} handleTotal={handleTotal} measurements={measurements} />
         </div>
         <div>
           <Button

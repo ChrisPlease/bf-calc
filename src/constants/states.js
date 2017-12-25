@@ -1,6 +1,7 @@
 const initialState = {
   weight: '',
   age: '',
+  gender: 'male',
   measurements: {
     first: 0,
     second: 0,

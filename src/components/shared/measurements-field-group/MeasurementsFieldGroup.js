@@ -5,7 +5,7 @@ import FormField from '../form-field/FormField';
 
 import { calculateSum, findNonZeros } from '../../../utils/math-helpers';
 
-const sites = {
+const maleSites = {
   chest: '',
   abdomen: '',
   thigh: ''

@@ -1,4 +1,7 @@
-input {
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"] {
   border: 1px solid #ccc;
   height: 40px;
   width: 100%;
