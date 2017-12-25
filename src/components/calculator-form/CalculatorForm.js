@@ -48,9 +48,7 @@ class CalculatorForm extends Component {
     const field = e.target.name;
     const value = e.target.value;
 
-    const { selectGender } = this.props;
-
-    selectGender(value);
+    this.setState({[field]: value});
   }
 
   handleTotal(order, total) {
