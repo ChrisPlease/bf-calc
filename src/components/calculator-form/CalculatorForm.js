@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { selectGender } from '../../actions/calculatorActions';
+
 import {
   calculateMaleBodyDensity,
   siriEquation,
@@ -21,7 +25,19 @@ class CalculatorForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...initialState };
+    this.state = {
+      weight: '',
+      age: '',
+      measurements: {
+        first: 0,
+        second: 0,
+        third: 0
+      },
+      bodyDensity: 0,
+      bodyFat: 0,
+      leanBodyMass: 0,
+      weightInFat: 0
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleTotal = this.handleTotal.bind(this);
@@ -32,7 +48,9 @@ class CalculatorForm extends Component {
     const field = e.target.name;
     const value = e.target.value;
 
-    this.setState({[field]: value});
+    const { selectGender } = this.props;
+
+    selectGender(value);
   }
 
   handleTotal(order, total) {
@@ -65,17 +83,17 @@ class CalculatorForm extends Component {
   }
 
   render() {
-    const { state, handleChange, handleSubmit, handleTotal } = this;
+    const { state, props, handleChange, handleSubmit, handleTotal } = this;
     const {
       age,
       weight,
-      gender,
       measurements,
       bodyDensity,
       bodyFat,
       leanBodyMass,
       weightInFat
     } = state;
+    const { gender } = props;
 
     return (
       <form className="calculator-panel">
@@ -136,4 +154,17 @@ class CalculatorForm extends Component {
   }
 }
 
-export default CalculatorForm;
+const mapStateToProps = (state) => {
+  const { gender } = state.calculator;
+
+  return {
+    gender,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectGender: bindActionCreators(selectGender, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CalculatorForm);
