@@ -1,6 +1,18 @@
 button {
-  border: 1px solid #ccc;
   padding: 0.5rem 1rem;
   margin: 1rem 0;
   font-size: 0.8rem;
+  cursor: pointer;
 }
+
+button.primary {
+  background: #bada55;
+}
+
+button.primary:hover,
+button.primary:active,
+button.primary:focus {
+  background: #b5cc68;
+}
+
+

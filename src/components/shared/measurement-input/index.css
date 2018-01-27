@@ -1,12 +1,13 @@
 .measure-input {
   display: flex;
   justify-content: space-around;
+  flex-direction: column;
 }
 
-.measure-input > * {
+.measure-input > div {
   display: flex;
-  flex-flow: column;
-  flex: 0 1 30%;
+  flex-direction: row;
+  margin: 0.5rem 0;
 }
 
 .form-field .measure-input label {

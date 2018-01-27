@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
+import './index.css';
+
 import FormField from '../form-field/FormField';
 
 import { calculateSum, findNonZeros } from '../../../utils/math-helpers';
@@ -93,13 +95,13 @@ class MeasurementsFieldGroup extends Component {
 
       return (
         <FormField
+            key={i}
             total={measurements[measure]}
             measureOrder={measure}
             locations={locations}
             values={state[measure]}
             handleChange={handleChange}
             calculateTotal={calculateTotal}
-            key={i}
             labelClass={labelClass}
             fieldName={displayName}
             step="1"
@@ -112,7 +114,7 @@ class MeasurementsFieldGroup extends Component {
     const { renderMeasurementFields } = this;
 
     return (
-      <div>
+      <div className="measurement-fields">
         {this.state.first && renderMeasurementFields()}
       </div>
     );

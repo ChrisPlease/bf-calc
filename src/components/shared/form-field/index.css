@@ -8,3 +8,10 @@
   align-self: flex-start;
   padding-bottom: 0.25rem;
 }
+
+/* Meausrement Fields */
+
+.measurement-field.form-field {
+  display: flex;
+  flex: 0 1 30%;
+}

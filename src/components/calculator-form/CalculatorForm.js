@@ -121,7 +121,7 @@ class CalculatorForm extends Component {
                 value="male"
                 type="radio"
                 onChange={handleChange}
-                checked={gender === 'male'} />
+                checked={gender === "male"} />
               <label htmlFor="male">
                 Male
               </label>
@@ -133,18 +133,17 @@ class CalculatorForm extends Component {
                 value="female"
                 type="radio"
                 onChange={handleChange}
-                checked={gender === 'female'} />
+                checked={gender === "female"} />
               <label htmlFor="female">Female</label>
             </li>
           </ul>
         </div>
         <span>Measurements</span>
-        <div className="measurement-fields">
-          <MeasurementsFieldGroup gender={gender} handleTotal={handleTotal} measurements={measurements} />
-        </div>
+        <MeasurementsFieldGroup gender={gender} handleTotal={handleTotal} measurements={measurements} />
         <div>
           <Button
-              clickHandler={handleSubmit}>
+            style="primary"
+            clickHandler={handleSubmit}>
             Submit
           </Button>
         </div>

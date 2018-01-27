@@ -2,9 +2,9 @@ import React from 'react';
 
 import './index.css';
 
-const Button = ({clickHandler, children}) => {
+const Button = ({clickHandler, children, style}) => {
   return (
-    <button onClick={clickHandler}>
+    <button className={style} onClick={clickHandler}>
       {children}
     </button>
   );
