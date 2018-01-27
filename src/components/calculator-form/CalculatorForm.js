@@ -17,7 +17,7 @@ import FormField from '../shared/form-field/FormField';
 import MeasurementsFieldGroup from '../shared/measurements-field-group/MeasurementsFieldGroup';
 import Button from '../shared/button/Button';
 
-import { initialState } from '../../constants/states';
+// import { initialState } from '../../constants/states';
 
 import './index.css';
 
@@ -47,8 +47,14 @@ class CalculatorForm extends Component {
   handleChange(e) {
     const field = e.target.name;
     const value = e.target.value;
+    const { selectGender } = this.props;
 
-    this.setState({[field]: value});
+    if (field !== 'gender') {
+      this.setState({[field]: value});
+    } else {
+      selectGender(value);
+    }
+
   }
 
   handleTotal(order, total) {
@@ -105,25 +111,29 @@ class CalculatorForm extends Component {
             value={weight}
             fieldName="Weight"
             step="0.1" />
-        <div>
+        <div className="gender-select">
           <ul>
             <li>
-              <label htmlFor="gender">Male</label>
               <input
+                id="male"
                 name="gender"
                 value="male"
                 type="radio"
                 onChange={handleChange}
                 checked={gender === 'male'} />
+              <label htmlFor="male">
+                Male
+              </label>
             </li>
             <li>
-              <label htmlFor="gender">Female</label>
               <input
+                id="female"
                 name="gender"
                 value="female"
                 type="radio"
                 onChange={handleChange}
                 checked={gender === 'female'} />
+              <label htmlFor="female">Female</label>
             </li>
           </ul>
         </div>
