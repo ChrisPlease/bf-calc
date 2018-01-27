@@ -1,4 +1,6 @@
-import * as types from '../actions/actionTypes';
+import { calculatorActions as types } from '../actions/actionTypes';
+
+const { SELECT_GENDER } = types;
 
 const initialState = {
   weight: '',
@@ -8,12 +10,9 @@ const initialState = {
 
 export default function calculatorReducer (state = initialState, action) {
 
-  switch(action.type) {
-    case types.calculatorActions.SELECT_GENDER:
-      return {
-        ...state,
-        gender: action.gender
-      };
+  switch (action.type) {
+    case SELECT_GENDER:
+      return { ...state, gender: action.gender };
     default:
       return state;
   }
