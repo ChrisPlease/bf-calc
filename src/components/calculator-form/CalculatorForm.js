@@ -50,7 +50,7 @@ class CalculatorForm extends Component {
     const { selectGender } = this.props;
 
     if (field !== 'gender') {
-      this.setState({[field]: value});
+      this.setState({[field]: parseInt(value, 10)});
     } else {
       selectGender(value);
     }
@@ -76,6 +76,7 @@ class CalculatorForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { weight, age, measurements } = this.state;
+
     const average = calculateAverage(...Object.values(measurements));
     const bodyDensity = calculateMaleBodyDensity(average, age);
     const bodyFat = siriEquation(bodyDensity);
