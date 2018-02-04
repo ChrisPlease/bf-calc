@@ -47,15 +47,14 @@ class MeasurementsFieldGroup extends Component {
       return findNonZeros(Object.values(state[val]));
     });
 
-    if (ordersWithValue.length) {
-      ordersWithValue.map(order => {
+    ordersWithValue
+      .filter(order => order.length)
+      .filter(order => calculateSum(...Object.values(state[order])) !== measurements[order])
+      .map(order => {
         const stateSum = calculateSum(...Object.values(state[order]));
 
-        if (stateSum !== measurements[order]) {
-          return handleTotal(order, stateSum)
-        }
+        return handleTotal(order, stateSum);
       });
-    }
   }
 
   handleChange(e) {
