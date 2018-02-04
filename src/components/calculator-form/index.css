@@ -35,7 +35,7 @@
 .gender-select input[type="radio"] {
   position: absolute;
   left: -100%;
-  visibility: hidden;
+  opacity: 0;
 }
 
 .gender-select input[type="radio"]:checked + label {

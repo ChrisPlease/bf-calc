@@ -142,7 +142,7 @@ class CalculatorForm extends Component {
         <MeasurementsFieldGroup gender={gender} handleTotal={handleTotal} measurements={measurements} />
         <div>
           <Button
-            style="primary"
+            styleName="primary"
             clickHandler={handleSubmit}>
             Submit
           </Button>
